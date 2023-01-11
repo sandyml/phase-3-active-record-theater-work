@@ -36,6 +36,7 @@ class Role < ActiveRecord::Base
     self.auditions.find_by(hired: true) || "no actor has been hired for this role"
  end
 
+#  `Role#understudy` returns the second instance of the audition that was hired for this role or returns a string 'no actor has been hired for understudy for this role'
  def understudy
     #  if auditions.where(hired: true).length > 1
     #          auditions.where(hired: true)[1]
@@ -43,5 +44,15 @@ class Role < ActiveRecord::Base
     #      "no actor has been hired for understudy for this role"
     #  end
     self.auditions.where(hired: true).second ||  'no actor has been hired for understudy for this role'
+
+   #  OR
+   # Role.last.understudy
+    understudy_role = self.auditions.where(hired: true).second #method .second
+
+    if understudy_role 
+      understudy_role
+    else 
+      'no actor has been hired for understudy for this role'
+    end
  end
 end
